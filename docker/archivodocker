@@ -1,0 +1,15 @@
+# Usa la imagen base de Ubuntu
+FROM ubuntu:latest
+
+# Ejecuta varios comandos para actualizar el sistema y limpiar archivos temporales
+RUN apt-get update && apt-get install apache2 -y && rm -rf /var/lib/apt/lists/*
+
+# Copia el archivo HTML de la carpeta actual al directorio de Apache
+ADD index.html /var/www/html/index.html
+
+# Declara el puerto 80 como el puerto de entrada para el contenedor
+EXPOSE 80/tcp
+
+# Define el comando de inicio para el contenedor
+ENTRYPOINT ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+
